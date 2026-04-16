@@ -196,7 +196,7 @@
       <div class="modal-content">
         <span class="close" onclick="closeModal('loginModal')">&times;</span>
         <h2>Login</h2>
-        <form id="loginForm">
+        <form id="loginForm" method="POST" action="login.php">
           <input type="email" placeholder="Email" name="email" required />
           <input
             type="password"
@@ -214,7 +214,7 @@
       <div class="modal-content">
         <span class="close" onclick="closeModal('registerModal')">&times;</span>
         <h2>Register</h2>
-        <form id="registerForm">
+        <form id="registerForm" method="POST" action="register.php">
           <input type="text" placeholder="Full Name" name="fullname" required />
           <input type="email" placeholder="Email" name="email" required />
           <input
@@ -223,6 +223,14 @@
             name="password"
             required
           />
+
+          <!-- NEW: ROLE SELECT -->
+          <select name="role" required>
+            <option value="">Select Role</option>
+            <option value="admin">Admin</option>
+            <option value="staff">Staff</option>
+          </select>
+
           <button type="submit">Register</button>
         </form>
       </div>
@@ -260,6 +268,14 @@
         const registerModal = document.getElementById("registerModal");
         if (event.target == loginModal) loginModal.style.display = "none";
         if (event.target == registerModal) registerModal.style.display = "none";
+      };
+
+      // Auto open login modal after successful registration
+      window.onload = function () {
+        const params = new URLSearchParams(window.location.search);
+        if (params.get("registered") === "1") {
+          openModal("loginModal");
+        }
       };
     </script>
   </body>
